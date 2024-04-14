@@ -116,3 +116,9 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 export KUBECONFIG=/etc/kubernetes/admin.conf
 sudo chmod +r /etc/kubernetes/admin.conf
 ```
+
+## Execute ONLY on "Worker Node"
+```bash
+sudo token --cri-socket unix:///var/run/cri-dockerd.sock
+```
+
