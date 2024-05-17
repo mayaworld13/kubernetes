@@ -55,11 +55,16 @@ This guide outlines the steps needed to set up a Kubernetes cluster using kubead
    To apply system-wide kernel parameters in Linux
 
    ```bash
-    sudo sysctl --system
+   sudo sysctl --system
    ```
+
+
+# Installing CRI-O for Kubernetes
+
+### To install CRI-O, a lightweight container runtime, for Kubernetes, follow these steps:
+
+1. **Import the GPG key for the CRI-O repository:**
    
-   
-sudo sysctl --system
 sudo curl -fsSL https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
 echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/ /" | sudo tee /etc/apt/sources.list.d/cri-o.list
 sudo apt-get update -y
