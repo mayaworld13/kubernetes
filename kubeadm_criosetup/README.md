@@ -14,13 +14,25 @@ This guide outlines the steps needed to set up a Kubernetes cluster using kubead
 ## Setup
 
 1. Update the packages and install packages needed to use the Kubernetes repository
+
+
    ```bash
     sudo apt-get update
     sudo apt-get install -y apt-transport-https ca-certificates curl gpg
    ```
+2. Download the public signing key for the Kubernetes package repositories.
 
-sudo apt-get update
-sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+   ```bash
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+   ```
+   
+ 3. Add the appropriate Kubernetes apt repository. Please note that this repository have packages only for Kubernetes 1.30; for other Kubernetes minor versions, you need to change the Kubernetes minor version in the URL to match your desired minor version
+
+  ```bash
+    echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+   ```
+
+
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
