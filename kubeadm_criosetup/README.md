@@ -63,7 +63,25 @@ This guide outlines the steps needed to set up a Kubernetes cluster using kubead
 
 ### To install CRI-O, a lightweight container runtime, for Kubernetes, follow these steps:
 
-1. **Import the GPG key for the CRI-O repository:**
+1. Import the GPG key for the CRI-O repository:
+   
+   ```sh
+   sudo curl -fsSL https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
+
+2. Add the CRI-O repository to the system:
+
+     ```bash
+     echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/ /" | sudo tee /etc/apt/sources.list.d/cri-o.list   
+     ```
+
+3. Update the package, install crio, daemon reload and enable the services of crio
+
+      ```bash
+      sudo apt-get update -y
+      sudo apt-get install -y cri-o
+      sudo systemctl daemon-reload
+      sudo systemctl enable crio --now   
+      ```
    
 sudo curl -fsSL https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
 echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/ /" | sudo tee /etc/apt/sources.list.d/cri-o.list
