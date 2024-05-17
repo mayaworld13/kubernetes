@@ -20,17 +20,22 @@ This guide outlines the steps needed to set up a Kubernetes cluster using kubead
     sudo apt-get update
     sudo apt-get install -y apt-transport-https ca-certificates curl gpg
    ```
+
+   
 2. Download the public signing key for the Kubernetes package repositories.
 
    ```bash
     curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
    ```
+
    
  3. Add the appropriate Kubernetes apt repository. Please note that this repository have packages only for Kubernetes 1.30; for other Kubernetes minor versions, you need to change the Kubernetes minor version in the URL to match your desired minor version
+
 
     ```bash
     echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
     ```
+
 
 4. Update the apt packages, install kubelet, kubeadm and kubectl, and enable the kubelet
 
@@ -41,6 +46,7 @@ This guide outlines the steps needed to set up a Kubernetes cluster using kubead
     sudo systemctl enable --now kubelet
    ```
 
+
 5. IPv4 forwarding is a networking feature that allows a system to forward packets from one network interface to another. In the context of Kubernetes, enabling IPv4 forwarding is crucial for networking between different containers or pods running on different nodes within a Kubernetes cluster.
 
    To enable IPv4 forwarding for Kubernetes networking
@@ -50,7 +56,10 @@ This guide outlines the steps needed to set up a Kubernetes cluster using kubead
       net.ipv4.ip_forward = 1
       EOF
       ```
+
+      
 6. This command loads system-wide settings from the /etc/sysctl.conf file and applies them to the kernel. It's often used after modifying kernel parameters to ensure that changes take effect without requiring a system reboot.
+
    
    To apply system-wide kernel parameters in Linux
 
@@ -58,6 +67,7 @@ This guide outlines the steps needed to set up a Kubernetes cluster using kubead
    sudo sysctl --system
    ```
 
+---
 
 # Installing CRI-O for Kubernetes
 
