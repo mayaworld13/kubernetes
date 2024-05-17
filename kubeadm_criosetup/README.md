@@ -41,7 +41,15 @@ This guide outlines the steps needed to set up a Kubernetes cluster using kubead
     sudo systemctl enable --now kubelet
    ```
 
-5.
+5. IPv4 forwarding is a networking feature that allows a system to forward packets from one network interface to another. In the context of Kubernetes, enabling IPv4 forwarding is crucial for networking between different containers or pods running on different nodes within a Kubernetes cluster.
+   
+To enable IPv4 forwarding for Kubernetes networking
+
+   ```bash
+   cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+   net.ipv4.ip_forward = 1
+   EOF
+   ```
    
 sudo sysctl --system
 sudo curl -fsSL https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
