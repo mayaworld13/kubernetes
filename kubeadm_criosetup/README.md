@@ -24,6 +24,7 @@ This guide outlines the steps needed to set up a Kubernetes cluster using kubead
    
 2. Download the public signing key for the Kubernetes package repositories.
 
+   
    ```bash
     curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
    ```
@@ -78,11 +79,13 @@ This guide outlines the steps needed to set up a Kubernetes cluster using kubead
    ```sh
    sudo curl -fsSL https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
 
+
 2. Add the CRI-O repository to the system:
 
      ```bash
      echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/ /" | sudo tee /etc/apt/sources.list.d/cri-o.list   
      ```
+
 
 3. Update the package, install crio, daemon reload and enable the services of crio
 
@@ -101,6 +104,7 @@ This guide outlines the steps needed to set up a Kubernetes cluster using kubead
    ```bash
    sudo kubeadm config images pull
    ```
+
    
 2. Initialize the kubernetes cluster
    
@@ -128,9 +132,11 @@ This guide outlines the steps needed to set up a Kubernetes cluster using kubead
 5. Deploy the Calico network plugin
    This command installs Calico, a network plugin for Kubernetes, which provides networking and network policy features.
 
+
    ```bash
    kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/calico.yaml
    ```
+
 
 6. (optional)  Remove the taint on the master node to allow scheduling of pods  (if you want to setup your cluster in that node no master no slave)
 
