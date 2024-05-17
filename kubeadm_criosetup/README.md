@@ -1,3 +1,18 @@
+# Kubeadm Installation Guide with CRI-O runtime
+
+This guide outlines the steps needed to set up a Kubernetes cluster using kubeadm.
+
+## Pre-requisites
+
+- Ubuntu OS 
+- sudo privileges
+- Internet access
+- t2.medium instance type or higher
+
+---
+
+## Setup
+
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
