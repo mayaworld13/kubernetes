@@ -83,14 +83,49 @@ This guide outlines the steps needed to set up a Kubernetes cluster using kubead
       sudo systemctl enable crio --now   
       ```
    
-sudo curl -fsSL https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg
-echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/ /" | sudo tee /etc/apt/sources.list.d/cri-o.list
-sudo apt-get update -y
-sudo apt-get install -y cri-o
-sudo systemctl daemon-reload
-sudo systemctl enable crio --now
-sudo kubeadm config images pull
-sudo kubeadm init
-sudo chmod 644 /etc/kubernetes/admin.conf
-kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/calico.yaml
-kubectl taint nodes --all node-role.kubernetes.io/control-plane-
+
+### Initializing a Kubernetes Cluster
+
+1. Pull the necessary images:
+
+   ```bash
+   sudo kubeadm config images pull
+   ```
+   
+2. Initialize the kubernetes cluster
+   
+   ```bash
+   sudo kubeadm init
+   ```
+   
+3. To set up kubeconfig for managing the Kubernetes cluster, run the following commands which helps in enabling you to use kubectl to manage your cluster.
+ 
+
+    ```bash
+   mkdir -p $HOME/.kube
+   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+   sudo chown $(id -u):$(id -g) $HOME/.kube/config
+   export KUBECONFIG=/etc/kubernetes/admin.conf
+   ```
+
+4. Set appropriate permissions on the Kubernetes admin configuration file in order to to ensure it is readable by users who need to access it.:
+
+
+   ```bash
+   sudo chmod 644 /etc/kubernetes/admin.conf
+   ```
+
+5. Deploy the Calico network plugin
+   This command installs Calico, a network plugin for Kubernetes, which provides networking and network policy features.
+
+   ```bash
+   kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/calico.yaml
+   ```
+
+6. (optional)  Remove the taint on the master node to allow scheduling of pods  (if you want to setup your cluster in that node no master no slave)
+
+   ```bash
+   kubectl taint nodes --all node-role.kubernetes.io/control-plane-
+   ```
+
+
