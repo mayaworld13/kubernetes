@@ -36,6 +36,18 @@ kubectl get  pods -n operators
 
 After the pods run then apply a configuration file to your Kubernetes cluster
 
+`argocd-basic.yml`
+
+```bash
+apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  name: example-argocd
+  labels:
+    example: basic
+spec: {}
+```
+
 ```bash
 kubectl apply -f argocd-basic.yml
 ```
